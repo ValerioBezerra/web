@@ -1,0 +1,79 @@
+@CHARSET "ISO-8859-1";
+
+
+.divcolor {
+    background: url(../images/front/1.jpg);   
+    padding-top: 10px;
+}
+
+.navbar_cinza{
+    background-color: #D6D6D6;      
+}
+
+.btn_filtro {
+	padding: 5px;
+}
+
+.sidebar-wrapper {
+  position: relative;
+  height: 100%;
+  overflow: auto
+ }
+
+.empresa {
+	padding-top: 30px;
+}
+
+.Titulo_empresa {
+	color  :  #ed6334;
+}
+.empresa_descricao {
+  	text-align:justify;
+ }
+
+.fundo_estabelecimentos{
+	background: url(../images/front/fundo_estabelecimentos.png);
+}
+.section_nav{
+	margin-bottom:0px!important;
+}
+section {	
+	min-height: 100vh;
+}
+.texto-branco {
+    color: #fff
+}
+.navbar-color {
+    background-color: #DD4814!important;  
+}
+
+.btn-facebook {  
+  color: #ffffff;
+  background-color: #2D5F9A;
+  border-color: #2D5F9A;
+}
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active,
+.open > .dropdown-toggle.btn-facebook {
+  color: #ffffff;
+  background-color: #3a73b6;
+  border-color: #3a73b6;
+}
+
+ .panel-transparent {
+        background: none;
+        border: none;
+        padding-top: 80px;
+        margin-top: 10px;
+     
+    }
+
+.panel-transparent .panel-heading{
+    background: url(../images/front/transparente.png)!important;
+}
+
+.panel-transparent .panel-body{
+    background: url(../images/front/transparente.png)!important;
+}

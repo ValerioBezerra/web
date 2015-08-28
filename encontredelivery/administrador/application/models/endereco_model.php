@@ -122,8 +122,19 @@ class Endereco_Model extends CI_Model {
 			return FALSE;
 		}
 	}
-	
-	public function verificarEnderecoCliente($dlv_dlvcli_ecl, $dlv_gloend_ecl, $dlv_numero_ecl) {
+
+    public function updateEnderecoCliente($endereco_cliente, $dlv_id_ecl) {
+        $this->db->where('dlv_id_ecl', $dlv_id_ecl, FALSE);
+        $res = $this->db->update('dlv_ecl', $endereco_cliente);
+
+        if ($res) {
+            return $this->db->insert_id();
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function verificarEnderecoCliente($dlv_dlvcli_ecl, $dlv_gloend_ecl, $dlv_numero_ecl) {
 		$this->db->where('dlv_dlvcli_ecl', $dlv_dlvcli_ecl, FALSE);
 		$this->db->where('dlv_gloend_ecl', $dlv_gloend_ecl, FALSE);
 		$this->db->where('dlv_numero_ecl', $dlv_numero_ecl);

@@ -40,7 +40,32 @@ class Endereco_Json extends CI_Controller {
 			echo $msgErros;
 		}
 	}
-	
+
+    public function alterar_endereco_cliente($chave) {
+        $json             = $this->input->post('json');
+        $endereco_cliente = json_decode($json,true);
+
+        $msgErros = "";
+        $erros    = FALSE;
+
+        if ($chave != CHAVE_MD5) {
+            $msgErros .= "- Chave de acesso inválida.\n";
+            $erros     = TRUE;
+        }
+
+        if (!$erros) {
+            $dlv_id_ecl = $this->EnderecoModel->updateEnderecoCliente($endereco_cliente, $endereco_cliente['dlv_id_ecl']);
+
+            if (is_numeric($dlv_id_ecl)) {
+                echo "s".$dlv_id_ecl;
+            } else {
+                echo "n";
+            }
+        } else {
+            echo $msgErros;
+        }
+    }
+
 	public function retornar_enderecos_gps($chave, $latitude, $longitude) {
 		$dados = array();
 	

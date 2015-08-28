@@ -180,20 +180,19 @@ class Pedido_JSON extends CI_Controller {
 					$valor_total        = $valor_total + $preco_aplicado;
 				}
 				
-				$resultado_fone  = $this->TelefoneModel->getTelefonesEmpresa($registro->dlv_id_emp);
-				
-				$fone           = "";
-				$separador_fone = "";
-				foreach ($resultado_fone as $registro_fone) {
-					$fone           = $fone.$separador_fone.$registro_fone->dlv_fone_ext;
-					$separador_fone = " / ";
-				}				
+                $fones = array();
+                $resultado_fones = $this->TelefoneModel->getTelefonesEmpresa($registro->dlv_id_emp);
+                foreach ($resultado_fones as $registro_fone) {
+                    $fones[] = array(
+                        "dlv_fone_ext" => $registro_fone->dlv_fone_ext
+                    );
+                }
 				
 				$dados[] = array(
 						"dlv_id_ped"          => $registro->dlv_id_ped,
 						"status"              => $status,
 						"dlv_nome_emp"        => $registro->dlv_nome_emp,
-						"dlv_fone_emp"        => $fone,
+						"fones"               => $fones,
 						"descricao_produtos"  => $descricao_produtos,
 						"preco_produtos"      => $preco_produtos,
 						"dlv_desconto_ped"    => $registro->dlv_desconto_ped,
@@ -206,6 +205,52 @@ class Pedido_JSON extends CI_Controller {
 	
 		echo json_encode(array("pedidos" => $dados));
 	}
+
+    public function retornar_detalhes_pedido($chave, $dlv_id_ped) {
+        $dados = array();
+
+        if ($chave == CHAVE_MD5) {
+            $resultado = $this->PedidoModel->getDetalhePedido($dlv_id_ped);
+
+            if ($resultado) {
+                $fones = array();
+                $resultado_fones = $this->TelefoneModel->getTelefonesEmpresa($resultado->dlv_id_emp);
+                foreach ($resultado_fones as $registro) {
+                    $fones[] = array(
+                        "dlv_fone_ext" => $registro->dlv_fone_ext
+                    );
+                }
+
+                $status = array();
+                $resultado_status = $this->StatusModel->getStatusPedido($dlv_id_ped);
+                foreach ($resultado_status as $registro) {
+                    $status[] = array(
+                        "dlv_descricao_sta"   => $registro->dlv_descricao_sta,
+                        "dlv_indicador_sta"   => $registro->dlv_indicador_sta,
+                        "dlv_datahoramod_spe" => date('d/m/Y - H:i', strtotime($registro->dlv_datahoramod_spe)),
+                        "dlv_motivocanc_spe"  => $registro->dlv_motivocanc_spe,
+                    );
+                }
+
+                $dados["dlv_data_ped"]        = date('d/m/Y', strtotime($resultado->dlv_datahora_ped));
+                $dados["dlv_hora_ped"]        = date('H:i', strtotime($resultado->dlv_datahora_ped));
+                $dados["dlv_nome_emp"]        = $resultado->dlv_nome_emp;
+                $dados["glo_cep_end"]         = $resultado->glo_cep_end;
+                $dados["glo_logradouro_end"]  = $resultado->glo_logradouro_end;
+                $dados["dlv_numero_ped"]	  = $resultado->dlv_numero_ped;
+                $dados["glo_nome_bai"]        = $resultado->glo_nome_bai;
+                $dados["glo_nome_cid"]        = $resultado->glo_nome_cid;
+                $dados["glo_uf_est"]          = $resultado->glo_uf_est;
+                $dados["dlv_complemento_ped"] = $resultado->dlv_complemento_ped;
+                $dados["fones"] = $fones;
+                $dados["status"] = $status;
+
+            }
+        }
+
+        echo json_encode($dados);
+    }
+
 	
 	public function retornar_status_pedido($chave, $dlv_dlvped_spe) {
 		$dados = array();
@@ -217,7 +262,7 @@ class Pedido_JSON extends CI_Controller {
 				$dados[] = array(
 					"dlv_descricao_sta"   => $registro->dlv_descricao_sta,
 					"dlv_indicador_sta"   => $registro->dlv_indicador_sta,
-					"dlv_datahoramod_spe" => date('d/m/Y H:i:s', strtotime($registro->dlv_datahoramod_spe)),
+					"dlv_datahoramod_spe" => date('d/m/Y - H:i', strtotime($registro->dlv_datahoramod_spe)),
 					"dlv_motivocanc_spe"  => $registro->dlv_motivocanc_spe,
 				);				
 			}

@@ -32,16 +32,16 @@ class Empresa_Json extends CI_Controller {
 	
 			foreach ($resultado as $registro) {
 				$tempoDistancia  = $this->EnderecoModel->getDistanciaTempoEnderecos($registro->glo_cep_end, $cep_cliente);
-				$resultado_fone  = $this->TelefoneModel->getTelefonesEmpresa($registro->dlv_id_emp);
-				
-				$fone           = "";
-				$separador_fone = "";
-				foreach ($resultado_fone as $registro_fone) {
-					$fone           = $fone.$separador_fone.$registro_fone->dlv_fone_ext;
-					$separador_fone = " / ";
-				}
-				
-				$taxa_entrega   = $registro->dlv_taxaentrega_emp;				
+
+                $fones = array();
+                $resultado_fones = $this->TelefoneModel->getTelefonesEmpresa($registro->dlv_id_emp);
+                foreach ($resultado_fones as $registro_fone) {
+                    $fones[] = array(
+                        "dlv_fone_ext" => $registro_fone->dlv_fone_ext
+                    );
+                }
+
+				$taxa_entrega   = $registro->dlv_taxaentrega_emp;
 				$resultado_taxa = $this->TaxaBairroModel->getEmpresaTaxaBairro($dlv_globai_ane, $registro->dlv_id_emp);
 				if (!empty($resultado_taxa)) {
 					$taxa_entrega = $resultado_taxa->dlv_taxaentrega_txb;
@@ -66,7 +66,7 @@ class Empresa_Json extends CI_Controller {
 					"dlv_taxaentrega_emp"  => $taxa_entrega,
 					"dlv_valorminimo_emp"  => $registro->dlv_valorminimo_emp,
 					"dlv_tempomedio_emp"   => $tempo_medio,
-					"dlv_fone_emp"         => $fone,	
+					"fones"                => $fones,
 					"dlv_aberto_emp"       => $registro->dlv_aberto_emp,
 					"glo_id_end"           => $registro->glo_id_end,
 					"glo_cep_end"          => $registro->glo_cep_end,

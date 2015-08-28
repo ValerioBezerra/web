@@ -135,7 +135,19 @@ class Pedido_Model extends CI_Model {
 		$this->db->where('dlv_recebido_ped', 0, FALSE);
 		$this->db->where('dlv_cancelado_ped', 0, FALSE);
 		return $this->db->get()->first_row();
-	}	
+	}
+
+    public function getDetalhePedido($dlv_id_ped) {
+        $this->db->from('dlv_ped');
+        $this->db->join('dlv_emp', 'dlv_id_emp = dlv_dlvemp_ped', 'LEFT');
+        $this->db->join('glo_end', 'glo_id_end = dlv_gloend_ped', 'LEFT');
+        $this->db->join('glo_bai', 'glo_id_bai = glo_globai_end');
+        $this->db->join('glo_cid', 'glo_id_cid = glo_glocid_bai');
+        $this->db->join('glo_est', 'glo_id_est = glo_gloest_cid');
+        $this->db->where('dlv_id_ped', $dlv_id_ped, FALSE);
+
+        return $this->db->get()->first_row();
+    }
 	
 	public function getPedidosCliente($dlv_dlvcli_ped, $opcao) {
 		$this->db->from('dlv_ped');

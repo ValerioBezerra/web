@@ -392,7 +392,7 @@ class Pedido_JSON extends CI_Controller {
 		}
 	}
 	
-	public function retonar_pedidos_impressora($chave, $dlv_dlvemp_ped) {
+	public function retonar_pedidos_impressora($chave, $dlv_dlvemp_ped, $opcao) {
 		$dados = array();
 		
 		if ($chave == CHAVE_MD5) {
@@ -490,8 +490,6 @@ class Pedido_JSON extends CI_Controller {
 								     $this->gerarCaracteresDireita(25, strtoupper($restante_produto), '%20').'|';
 					}
 					
-					
-					
 					if (!empty($complemento_produto)) {
 						$produtos .= $complemento_produto;
 					}
@@ -522,11 +520,23 @@ class Pedido_JSON extends CI_Controller {
 				
 				
 				$rodape .= '||'.$this->gerarCaracteresDireita(6, '', '%20').'****%20DOCUMENTO%20NAO%20FISCAL%20****||';
-				
-				$pedido = array(
-					"dlv_impbalcao_ped"  => 0,
-					"dlv_impcozinha_ped" => 0
-				);
+
+                if ($opcao == null) {
+                        $pedido = array(
+                            "dlv_impbalcao_ped" => 0,
+                            "dlv_impcozinha_ped" => 0
+                        );
+                } else {
+                    if ($opcao == 0) {
+                        $pedido = array(
+                            "dlv_impbalcao_ped" => 0
+                        );
+                    } else {
+                        $pedido = array(
+                            "dlv_impcozinha_ped" => 0
+                        );
+                    }
+                }
 				
 				$resultado = $this->PedidoModel->update($pedido, $registro->dlv_id_ped);
 				

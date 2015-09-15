@@ -4,7 +4,8 @@ class Pedido_JSON extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		
+
+        $this->load->model('Empresa_Model', 'EmpresaModel');
 		$this->load->model('Pedido_Model', 'PedidoModel');
 		$this->load->model('Configuracao_Model', 'ConfiguracaoModel');
 		$this->load->model('Status_Model', 'StatusModel');
@@ -51,8 +52,14 @@ class Pedido_JSON extends CI_Controller {
 		if ($chave != CHAVE_MD5) {
 			$msgErros .= "- Chave de acesso inválida.\n";
 			$erros     = TRUE;
-		} 
-		
+		}
+
+        $empresa = $this->EmpresaModel->getEmpresa($pedido_temp['dlv_dlvemp_ped']);
+        if (($empresa) && ($empresa->dlv_aberto_emp == 0)) {
+            $msgErros .= "- Infelizmente o restaurante fechou enquanto você montava seu pedido.\n";
+            $erros     = TRUE;
+        }
+
 		if (!$erros) {
 			$dlv_id_ped = $this->PedidoModel->insert($pedido, $produtos_pedido_array);
 			
@@ -392,7 +399,7 @@ class Pedido_JSON extends CI_Controller {
 		}
 	}
 	
-	public function retonar_pedidos_impressora($chave, $dlv_dlvemp_ped, $opcao) {
+	public function retonar_pedidos_impressora($chave, $dlv_dlvemp_ped, $opcao = NULL) {
 		$dados = array();
 		
 		if ($chave == CHAVE_MD5) {

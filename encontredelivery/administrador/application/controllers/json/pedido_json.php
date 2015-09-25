@@ -277,7 +277,33 @@ class Pedido_JSON extends CI_Controller {
 		
 		echo json_encode(array("status" => $dados));
 	}
-	
+
+	public function retornar_pedidos_json($chave, $opcao_status, $data_inicial, $data_final) {
+		$dados = array();
+
+		if ($chave == CHAVE_MD5) {
+			$resultado = $this->PedidoModel->getPedidosEmpresa(1, $opcao_status, $data_inicial, $data_final);
+
+			foreach ($resultado as $registro) {
+				$status = $this->StatusModel->getUltimoStatusPedido($registro->dlv_id_ped);
+
+				$status_descricao = "";
+				if (!empty($status))
+					$status_descricao = $status->dlv_descricao_sta;
+
+				$dados[] = array(
+					"dlv_nome_emp" => $registro->dlv_nome_emp,
+					"dlv_data_ped" => date('d/m/Y', strtotime($registro->dlv_datahora_ped)),
+					"dlv_hora_ped" => date('H:i:s', strtotime($registro->dlv_datahora_ped)),
+					"dlv_nome_cli" => $registro->dlv_nome_cli,
+					"status"       => $status_descricao,
+				);
+			}
+		}
+
+		echo json_encode(array("pedidos" => $dados));
+	}
+
 	public function retornar_pedidos_empresa($dlv_dlvemp_ped, $opcao_status, $data_inicial, $data_final) {		
 		$resultado = $this->PedidoModel->getPedidosEmpresa($dlv_dlvemp_ped, $opcao_status, $data_inicial, $data_final);
 		
@@ -314,7 +340,6 @@ class Pedido_JSON extends CI_Controller {
 			                      $registro->glo_nome_bai.'. '.$registro->glo_nome_cid.' - '.$registro->glo_uf_est.'\n'.
 			                      'Ref: '.$registro->dlv_complemento_ped;
 			
-			
 			$dlv_dlvent_ped = 0;
 			if (!is_null($registro->dlv_dlvent_ped)) {
 				$dlv_dlvent_ped = $registro->dlv_dlvent_ped;
@@ -345,9 +370,6 @@ class Pedido_JSON extends CI_Controller {
 		            $display_kingsoft_imp.'		            
 		            </tr>';
 		}
-		
-// 		<td class="text-center"><a href="'.site_url('pedido/imprimir/'.base64_encode($registro->dlv_id_ped)).'" class="btn-link" title="Imprimir" target="_blank"><i class="glyphicon glyphicon-print"></i></a></td>
-		
 		
 	}
 

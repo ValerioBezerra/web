@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'encontredelivery';
+$db['default']['password'] = '123';
+$db['default']['database'] = 'encon816_encontredelivery';
 // $db['default']['username'] = 'encon816_king';
 // $db['default']['password'] = 'K1ng@eenv_';
 // $db['default']['database'] = 'encon816_encontredelivery_demo';

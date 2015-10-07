@@ -215,43 +215,61 @@
 	<script src="assets/js/plugins/jquery-editable/jquery-editable-poshytip.js"></script>
 	<script src="assets/js/plugins/popModal/popModal.js"></script>
 <!-- 	<script src="assets/js/plugins/simpler-sidebar/simpler-sidebar.js"></script> -->
-	
+
 	<script type="text/javascript">
-	
-	    $('#username').editable({
-	        url: '/post',
-	        title: 'Enter username'
-	    });
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '1385834838396217',
+				xfbml      : true,
+				version    : 'v2.4'
+			});
+		};
 
-	    $('#elem').popModal({ html :'teste' });
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "http://connect.facebook.net/pt_BR/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<script type="text/javascript">
+
+		$('#username').editable({
+			url: '/post',
+			title: 'Enter username'
+		});
+
+		$('#elem').popModal({ html :'teste' });
 		
-	$('.hintModal').hintModal();
+		$('.hintModal').hintModal();
 
-	$('.titleModal').titleModal();
+		$('.titleModal').titleModal();
 
-	
-	$(".js-example-basic-multiple").select2({
-		language: "pt-BR"
-    });
 
-	$("#segmento").select2({
-		placeholder: "Selecione um tipo de cozinha"
-	});
+		$(".js-example-basic-multiple").select2({
+			language: "pt-BR"
+		});
 
-	$('#cozinha').multiselect({
-		buttonWidth: '240px',
-		nonSelectedText: 'Segmento: Todos'
-	    }
-	      );
-	$('#pagamento').multiselect({
-		buttonWidth: '240px',
-		nonSelectedText: 'Pagamento: Todos'
-    })
-	
-	$('#entrega').multiselect({
-		buttonWidth: '240px',
-		nonSelectedText: 'Entrega: Todos'
-    });
+		$("#segmento").select2({
+			placeholder: "Selecione um tipo de cozinha"
+		});
+
+		$('#cozinha').multiselect({
+			buttonWidth: '240px',
+			nonSelectedText: 'Segmento: Todos'
+			}
+			  );
+		$('#pagamento').multiselect({
+			buttonWidth: '240px',
+			nonSelectedText: 'Pagamento: Todos'
+		})
+
+		$('#entrega').multiselect({
+			buttonWidth: '240px',
+			nonSelectedText: 'Entrega: Todos'
+		});
 
 		function abrirLogin() {
    			$('#login_email').val(""); 
@@ -405,6 +423,7 @@
 			}
 			
 			if (cadastro_confirmar_senha.trim() == '') {
+
 				 $("#div_cadastro_confirmar_senha").attr("class", "has-error form-group text-left"); 
 				 document.getElementById('label_cadastro_confirmar_senha').innerHTML = icone_error + 'Confirme sua senha.';
 				 $('#label_cadastro_confirmar_senha').removeAttr("hidden");
@@ -586,26 +605,6 @@
 			} 
 		}
 
-		window.fbAsyncInit = function() {
-	    	FB.init({
-	      		appId      : '1385834838396217',
-	      		xfbml      : true,
-	      		version    : 'v2.2'
-	    	});
-	  	};
-	
-	  	(
-	  		function(d, s, id){
-		    	var js, fjs = d.getElementsByTagName(s)[0];
-		     	if (d.getElementById(id)) {return;}
-		     	js = d.createElement(s); js.id = id;
-		     	js.src = "//connect.facebook.net/en_US/sdk.js";
-		     	fjs.parentNode.insertBefore(js, fjs);
-		   	 } 
-
-		   	 (document, 'script', 'facebook-jssdk')
-	   	);
-			
 	</script>
 </body>		
 </html>

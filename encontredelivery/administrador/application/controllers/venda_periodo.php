@@ -13,8 +13,9 @@ class Venda_Periodo extends CI_Controller {
 	}
 	
 	public function index() {
-		date_default_timezone_set("Brazil/East");
-		
+//		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+
 		$dados               = array();
 		$dados['ACAO_FORM']  = site_url('venda_periodo/imprimir');		
 		

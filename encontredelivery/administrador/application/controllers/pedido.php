@@ -17,8 +17,9 @@ class Pedido extends CI_Controller {
 		if (($this->session->userdata('dlv_id_emp') != 1) && 
 			($this->session->userdata('dlv_altstatusped_per') != 1)) {redirect('');}
 		
-		date_default_timezone_set("Brazil/East");
-		
+//		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+
 		$dados = array();
 		$dados['URL_PEDIDO']               = site_url('/json/pedido_json/retornar_pedidos_empresa/'.$this->session->userdata('dlv_id_emp'));
 		$dados['URL_MODIFICAR_STATUS']     = site_url('/json/pedido_json/modificar_status/'.CHAVE_MD5.'/'.$this->session->userdata('dlv_id_usu'));
@@ -223,8 +224,9 @@ class Pedido extends CI_Controller {
 		$dlv_dlvsta_spe     = $this->input->post('dlv_dlvsta_spe');
 		$dlv_motivocanc_spe = $this->input->post('dlv_motivocanc_spe');
 		
-		date_default_timezone_set("Brazil/East");
-		
+//		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+
 		if ($this->testarDadosStatus()) {
 			$status_pedido = array(
 					"dlv_dlvped_spe"	  => $dlv_id_ped,

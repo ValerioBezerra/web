@@ -13,11 +13,12 @@ class Pedido_JSON extends CI_Controller {
 		$this->load->model('Adicional_Model', 'AdicionalModel');
 		$this->load->model('Telefone_Model', 'TelefoneModel');
 	}
-	
+
 	public function enviar($chave) {
 		$json        = $this->input->post('json');
 		$pedido_temp = json_decode($json,true);
-		date_default_timezone_set("Brazil/East");
+//		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
 		
 		$dlv_dlvvou_ped = null;
 		if (array_key_exists("dlv_dlvvou_ped", $pedido_temp)) {
@@ -86,7 +87,8 @@ class Pedido_JSON extends CI_Controller {
 		$dlv_id_ped          = json_decode($json,true);
 		$pedido              = $this->PedidoModel->getRecebido($dlv_id_ped['dlv_id_ped']);
 		$configuracao        = $this->ConfiguracaoModel->get();
-		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+//		date_default_timezone_set("Brazil/East");
 		
 		if ($pedido->dlv_recebido_ped == 0) {
 			$status_pedido = array(
@@ -374,7 +376,8 @@ class Pedido_JSON extends CI_Controller {
 	}
 
 	public function modificar_status($chave, $id_usuario, $id_pedido, $id_status, $motivo = NULL) {
-		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+//		date_default_timezone_set("Brazil/East");
 		
 		if ($chave == CHAVE_MD5) {
 			if (is_null($motivo)) {
@@ -628,7 +631,8 @@ class Pedido_JSON extends CI_Controller {
 	}
 	
 	public function modificar_entregador($chave, $id_pedido, $id_entregador) {
-		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+//		date_default_timezone_set("Brazil/East");
 	
 		if ($chave == CHAVE_MD5) {
 			$pedido = array(

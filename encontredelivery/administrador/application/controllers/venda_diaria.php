@@ -12,8 +12,9 @@ class Venda_Diaria extends CI_Controller {
 	}
 	
 	public function index($data_inicial = NULL, $data_final = NULL) {
-		date_default_timezone_set("Brazil/East");
-		
+//		date_default_timezone_set("Brazil/East");
+		date_default_timezone_set("America/Araguaina");
+
 		$dados               = array();
 		$dados['ACAO_FORM']  = site_url('venda_diaria/pesquisar');		
 		

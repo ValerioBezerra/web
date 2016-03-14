@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Segmento_Model extends CI_Model {
+class Plano_Model extends CI_Model {
 	
 	public function get() {
 		$this->db->from('bus_pla');

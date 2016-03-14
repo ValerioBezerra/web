@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Segmento extends CI_Controller {
+class Plano extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		
@@ -61,7 +61,7 @@ class Segmento extends CI_Controller {
 		
 		
 		if ($this->testarDados()) {
-			$segmento = array(
+			$plano = array(
 				"bus_descricao_pla" => $bus_descricao_pla
 			);
 			
@@ -72,7 +72,7 @@ class Segmento extends CI_Controller {
 			}
 
 			if (is_numeric($bus_id_pla)) {
-				$this->session->set_flashdata('sucesso', 'segbustível salvo seg sucesso.');
+				$this->session->set_flashdata('sucesso', 'plano salvo com sucesso.');
 				redirect('plano');
 			} else {
 				$this->session->set_flashdata('erro', $bus_id_pla);
@@ -113,7 +113,7 @@ class Segmento extends CI_Controller {
 			$dados['BLC_DADOS'][] = array(
 				"BUS_ID_PLA"        => $registro->bus_id_pla,
 				"BUS_DESCRICAO_PLA" => $registro->bus_descricao_pla,
-				"EDITAR_PLANO   => site_url('plano/editar/'.base64_encode($registro->bus_id_pla)),
+				"EDITAR_PLANO"   => site_url('plano/editar/'.base64_encode($registro->bus_id_pla)),
 				"APAGAR_PLANO"   => "abrirConfirmacao('".base64_encode($registro->bus_id_pla)."')"
 			);
 		}
@@ -168,7 +168,7 @@ class Segmento extends CI_Controller {
 //		}
 	
 		if ($erros) {
-			$this->session->set_flashdata('titulo_erro', 'Não foi possível apagar o segmento:');
+			$this->session->set_flashdata('titulo_erro', 'Não foi possível apagar o plano:');
 			$this->session->set_flashdata('erro', nl2br($mensagem));
 		}
 	

@@ -7,72 +7,7 @@
 <!-- /.row -->
 
 
-<div class="row">
-	<div class="col-lg-3 col-md-6 {DIV_ABERTO}">
-		<div class="panel panel-green">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-xs-3">
-						<i class="fa fa-tasks fa-4x"></i>
-					</div>
-					<div class="col-xs-9 text-right">
-						<div class="huge">Aberto</div>
-					</div>
-				</div>
-			</div>
-			<a class="btn-link" onclick="showFechar()">
-				<div class="panel-footer">
-					<span class="pull-left">Fechar estabalecimento</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-6 {DIV_FECHADO}">
-		<div class="panel panel-red">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-xs-3">
-						<i class="fa fa-support fa-4x"></i>
-					</div>
-					<div class="col-xs-9 text-right">
-						<div class="huge">Fechado</div>
-					</div>
-				</div>
-			</div>
-			<a class="btn-link" onclick="showAbrir()">
-				<div class="panel-footer">
-					<span class="pull-left">Abrir estabelecimento</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
 
-	<div class="col-lg-3 col-md-6 {DIV_PEDIDOS}">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-xs-3">
-						<i class="fa fa-tags fa-4x"></i>
-					</div>
-					<div class="col-xs-9 text-right">
-						<div class="huge"></div>
-					</div>
-				</div>
-			</div>
-			<a href="<?php echo site_url('pedido')?>">
-				<div class="panel-footer">
-					<span class="pull-left">Ver Pedidos</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
-</div>
 <!-- /.row -->
 <div class="row">
 	<div class="col-md-12">

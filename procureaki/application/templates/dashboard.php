@@ -77,6 +77,10 @@
 								<li>
 									<a  style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('segmento')?>">Segmento</a>
 								</li>
+                               <li>
+                                   <a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('plano')?>">Planos</a>
+                                  </li>
+
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('cambio')?>">Câmbio</a>
 								</li>
@@ -110,7 +114,8 @@
 								</li>
 								<li>
 									<a style="{dlv_althorario_per}" href="<?php echo site_url('horario')?>">Horários</a>
-								</li>                                
+								</li>
+
 								<li>
 									<a style="{dlv_alttaxa_per}" href="<?php echo site_url('taxas_valores')?>">Taxas e Valores</a>
 								</li>
@@ -200,6 +205,7 @@
 	<script>
 	    $(document).ready(function() {
 	        $('#tb_segmento').dataTable({"order": [[ 1, "asc" ]]});
+            $('#tb_plano').dataTable({"order": [[ 1, "asc" ]]});
 	        $('#tb_cambio').dataTable({"order": [[ 1, "asc" ]]});
 	        $('#tb_cargo').dataTable({"order": [[ 1, "asc" ]]});
 	        $('#tb_rede_social').dataTable({"order": [[ 1, "asc" ]]});

@@ -1,6 +1,14 @@
 <div class="row">
 	<div class="col-lg-12">
         <h2 class="page-header">Segmento - {ACAO}</h2>
+
+    <div class="pull-right">
+     <a type="button" href="{URL_METRICAS}" class="btn btn-primary" {DISABLE_METRICAS}>
+      <i class="glyphicon glyphicon-list-alt"></i> Metricas
+     </a>
+    </div>
+
+
     </div>
 </div>
 

@@ -81,6 +81,10 @@
                                    <a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('plano')?>">Planos</a>
                                   </li>
 
+                               <li>
+                                   <a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('metrica')?>">Metricas</a>
+                               </li>
+
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('cambio')?>">Câmbio</a>
 								</li>

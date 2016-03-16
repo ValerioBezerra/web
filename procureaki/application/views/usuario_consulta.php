@@ -27,10 +27,10 @@
                         <tbody>
                         	{BLC_DADOS}
 	                            <tr>
-	                                <td>{DLV_NOME_USU}</td>
-	                                <td>{DLV_DESCRICAO_PER}</td>
+	                                <td>{BUS_NOME_USU}</td>
+	                                <td>{BUS_DESCRICAO_PER}</td>
 	                                <td class="text-center">
-	                                	<input type="checkbox" value="1" {DLV_ATIVO_USU} disabled/>
+	                                	<input type="checkbox" value="1" {BUS_ATIVO_USU} disabled/>
 	                                </td>
 	                                <td class="text-center"><a href="{EDITAR_USUARIO}" class="btn-link" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
 	                                <td class="text-center"><a onclick="{APAGAR_USUARIO}" class="btn-link" title="Apagar"><i class="glyphicon glyphicon-trash"></i></a></td>
@@ -54,7 +54,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Encontre Delivery</h3>
+                    <h3 class="modal-title" id="myModalLabel">Procure Aki</h3>
                 </div>
                 <div class="modal-body">
                     <h4>Deseja realmente apagar este usuario ?</h4>

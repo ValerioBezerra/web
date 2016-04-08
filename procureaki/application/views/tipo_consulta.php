@@ -26,8 +26,8 @@
                         <tbody>
                         	{BLC_DADOS}
 	                            <tr>
-	                                <td  class="text-right">{VEI_ID_TIP}</td>
-	                                <td>{VEI_DESCRICAO_TIP}</td>
+	                                <td  class="text-right">{BUS_ID_TIP}</td>
+	                                <td>{BUS_DESCRICAO_TIP}</td>
 	                                <td class="text-center"><a href="{EDITAR_TIPO}" class="btn-link" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a></td>
 	                                <td class="text-center"><a onclick="{APAGAR_TIPO}" class="btn-link" title="Apagar"><i class="glyphicon glyphicon-trash"></i></a></td>
 	                            </tr>
@@ -35,11 +35,11 @@
                         </tbody>                   
                     </table>
                 </div>
-                	
 
                 <div>
                     <a href="{NOVO_TIPO}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Novo Tipo</a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -50,10 +50,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Autos do  Vale</h3>
+                    <h3 class="modal-title" id="myModalLabel">ProcureAki</h3>
                 </div>
                 <div class="modal-body">
-                    <h4>Deseja realmente apagar este tipo ?</h4>
+                    <h4>Deseja realmente apagar este tpo ?</h4>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="apagar()">Sim</button>

@@ -86,13 +86,10 @@
                                </li>
 
 								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('cambio')?>">Câmbio</a>
+									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('tipo')?>">Tipo</a>
 								</li>
 								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('tipo')?>">Tipo</a>
-								</li>                                
-								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('opcional')?>">Opcional</a>
+									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('cambio')?>">Câmbio</a>
 								</li>
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('marca')?>">Marca</a>

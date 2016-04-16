@@ -13,6 +13,13 @@ class Tipo_Model extends CI_Model {
 		$this->db->from('bus_tip');
 		return $this->db->get()->first_row();
 	}
+
+	public function getTipoSeg($bus_busseg_tip) {
+		$this->db->where('bus_busseg_tip', $bus_busseg_tip, FALSE);
+		$this->db->from('bus_tip');
+		$this->db->order_by('bus_descricao_tip');
+		return $this->db->get()->result();
+	}
 	
 	public function insert($tipo) {
 		$res = $this->db->insert('bus_tip', $tipo);

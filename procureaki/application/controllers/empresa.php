@@ -13,6 +13,7 @@ class Empresa extends CI_Controller {
 		$this->load->model('Perfil_Model', 'PerfilModel');
 		$this->load->model('Usuario_Model', 'UsuarioModel');
 		$this->load->model('Telefone_Model', 'TelefoneModel');
+		$this->load->model('Segmento_Model', 'SegmentoModel');
 //		$this->load->model('Produto_Model', 'ProdutoModel');
 	}
 	
@@ -38,6 +39,7 @@ class Empresa extends CI_Controller {
 		$dados['bus_cpfcnpj_emp']        = '';
 		$dados['bus_numero_emp']         = '';
 		$dados['bus_complemento_emp']    = '';
+		$dados['bus_busseg_emp']         = '';
 		$dados['bus_ativo_emp']          = 'checked';
 		$dados['bus_escolheproduto_emp'] = 'checked';
 		$dados['bus_usaadicionais_emp']  = 'checked';
@@ -63,6 +65,7 @@ class Empresa extends CI_Controller {
 		
 		$this->carregarDadosFlash($dados);
 
+		$this->carregarSegmentos($dados);
 		
 		$this->parser->parse('empresa_cadastro', $dados);
 	}
@@ -78,6 +81,7 @@ class Empresa extends CI_Controller {
 		
 		$this->carregarDadosFlash($dados);
 
+		$this->carregarSegmentos($dados);
 		
 		$this->parser->parse('empresa_cadastro', $dados);	
 	}
@@ -92,6 +96,7 @@ class Empresa extends CI_Controller {
 		global $bus_numero_emp;
 		global $bus_complemento_emp;
 		global $bus_ativo_emp;
+		global $bus_busseg_emp;
 
 		
 		
@@ -108,6 +113,7 @@ class Empresa extends CI_Controller {
 		$bus_numero_emp         = $this->input->post('bus_numero_emp');
 		$bus_complemento_emp    = $this->input->post('bus_complemento_emp');
 		$bus_ativo_emp          = $this->input->post('bus_ativo_emp');
+		$bus_busseg_emp         = $this->input->post('bus_busseg_emp');
 
 				
 		$glo_cep_end          = $this->input->post('glo_cep_end');
@@ -131,7 +137,8 @@ class Empresa extends CI_Controller {
 				"bus_gloend_emp"	         => $bus_gloend_emp,
 				"bus_numero_emp"	         => $bus_numero_emp,
 				"bus_complemento_emp"        => $bus_complemento_emp,
-				"bus_ativo_emp"              => ($bus_ativo_emp)?'1':'0'
+				"bus_ativo_emp"              => ($bus_ativo_emp)?'1':'0',
+				"bus_busseg_emp"             => $bus_busseg_emp
 			);
 			
 			$inclusao = !	$bus_id_emp;
@@ -229,8 +236,8 @@ class Empresa extends CI_Controller {
 		$dados['MASCARA_CNPJ']      = MASCARA_CNPJ;		
 		$dados['MASCARA_CEP']       = MASCARA_CEP;		
 		$dados['URL_ENDERECO']      = site_url('endereco/retornar_endereco_completo/');		
-		$dados['URL_SEGMENTOS']     = site_url('empresa_segmento/index/'.base64_encode($dados['bus_id_emp']));
-		$dados['DISABLE_SEGMENTO']	= ($dados['bus_id_emp'] == 0)?'disabled':'';	
+		$dados['URL_TIPO']     = site_url('empresa_tipo/index/'.base64_encode($dados['bus_id_emp']). '/' . base64_encode($dados['bus_busseg_emp']));
+		$dados['DISABLE_TIPO']	= ($dados['bus_id_emp'] == 0)?'disabled':'';
 	}
 	
 	private function carregarDados(&$dados) {
@@ -283,8 +290,20 @@ class Empresa extends CI_Controller {
 			show_error('Não foram encontrados dados.', 500, 'Ops, erro encontrado');			
 		}
 	}
-	
 
+	private function carregarSegmentos(&$dados) {
+		$resultado = $this->SegmentoModel->get();
+
+		$dados['BLC_SEGMENTO'] = array();
+
+		foreach ($resultado as $registro) {
+			$dados['BLC_SEGMENTO'][] = array(
+				"BUS_ID_SEG"          => $registro->bus_id_seg,
+				"BUS_DESCRICAO_SEG"   => $registro->bus_descricao_seg,
+				"SEL_BUS_ID_SEG"      => ($dados['bus_busseg_emp'] == $registro->bus_id_seg)?'selected':''
+			);
+		}
+	}
 	
 	
 	private function testarDados() {
@@ -297,6 +316,7 @@ class Empresa extends CI_Controller {
 		global $bus_numero_emp;
 		global $bus_complemento_emp;
 		global $bus_ativo_emp;
+		global $bus_busseg_emp;
 		global $bus_escolheproduto_emp;
 		global $bus_usaadicionais_emp;
 		global $bus_usatamanhos_emp;
@@ -339,6 +359,19 @@ class Empresa extends CI_Controller {
 					$erros    = TRUE;
 					$mensagem .= "- CNPJ inválido.\n";
 					$this->session->set_flashdata('ERRO_BUS_CPFCNPJ_EMP', 'has-error');
+				}
+			}
+
+			if (empty($bus_busseg_emp)) {
+				$erros    = TRUE;
+				$mensagem .= "- Selecione um  segmento.\n";
+				$this->session->set_flashdata('ERRO_BUS_BUSSEG_EMP', 'has-error');
+			} else {
+				$resultado = $this->SegmentoModel->getSegmento($bus_busseg_emp);
+				if (!$resultado) {
+					$erros = TRUE;
+					$mensagem .= "- Segmento não cadastrado.\n";
+					$this->session->set_flashdata('ERRO_BUS_BUSSEG_EMP', 'has-error');
 				}
 			}
 			
@@ -403,6 +436,7 @@ class Empresa extends CI_Controller {
 			$this->session->set_flashdata('bus_usaadicionais_emp', $bus_usaadicionais_emp);
 			$this->session->set_flashdata('bus_usatamanhos_emp', $bus_usatamanhos_emp);
 			$this->session->set_flashdata('bus_controlaentregador_emp', $bus_controlaentregador_emp);
+			$this->session->set_flashdata('bus_busseg_emp', $bus_busseg_emp);
 				
 			$this->session->set_flashdata('glo_cep_end', $glo_cep_end);
 			$this->session->set_flashdata('glo_logradouro_end', $glo_logradouro_end);
@@ -460,6 +494,7 @@ class Empresa extends CI_Controller {
 		$ERRO_BUS_NOME_EMP    = $this->session->flashdata('ERRO_BUS_NOME_EMP');
 		$ERRO_BUS_CPFCNPJ_EMP = $this->session->flashdata('ERRO_BUS_CPFCNPJ_EMP');
 		$ERRO_BUS_NUMERO_EMP  = $this->session->flashdata('ERRO_BUS_NUMERO_EMP');
+		$ERRO_BUS_BUSSEG_EMP = $this->session->flashdata('ERRO_BUS_BUSSSEG_EMP');
 		
 		$ERRO_ENDERECO        = $this->session->flashdata('ERRO_ENDERECO');
 		$ERRO_GLO_CEP_END     = $this->session->flashdata('ERRO_GLO_CEP_END');
@@ -471,6 +506,7 @@ class Empresa extends CI_Controller {
 		$bus_numero_emp         = $this->session->flashdata('bus_numero_emp');
 		$bus_complemento_emp    = $this->session->flashdata('bus_complemento_emp');
 		$bus_ativo_emp          = $this->session->flashdata('bus_ativo_emp');
+		$bus_busseg_emp         = $this->session->flashdata('bus_busseg_emp');
 		$bus_escolheproduto_emp = $this->session->flashdata('bus_escolheproduto_emp');
 		$bus_usaadicionais_emp  = $this->session->flashdata('bus_usaadicionais_emp');
 		$bus_usatamanhos_emp    = $this->session->flashdata('bus_usatamanhos_emp');
@@ -496,6 +532,7 @@ class Empresa extends CI_Controller {
 			$dados['bus_usaadicionais_emp']  = ($bus_usaadicionais_emp == 1)?'checked':'';
 			$dados['bus_usatamanhos_emp']    = ($bus_usatamanhos_emp == 1)?'checked':'';
 			$dados['bus_controlaentregador_emp']    = ($bus_controlaentregador_emp == 1)?'checked':'';
+			$dados['bus_busseg_emp']          = $bus_busseg_emp;
 				
 			if (empty($bus_cpfcnpj_emp)) {
 				$dados['bus_cpfcnpj_emp']  = '';
@@ -513,6 +550,7 @@ class Empresa extends CI_Controller {
 			$dados['CLASS_DIV_BUS_CPFCNPJ_EMP_J'] = ($bus_tipopessoa_emp == 'j')?'':'transp';
 			$dados['DIV_BUS_CPFCNPJ_EMP_F']       = ($bus_tipopessoa_emp == 'f')?'':'disabled';
 			$dados['DIV_BUS_CPFCNPJ_EMP_J']       = ($bus_tipopessoa_emp == 'j')?'':'disabled';
+			$dados['ERRO_BUSSEG_EMP']             = $ERRO_BUS_BUSSEG_EMP;
 				
 			$dados['ERRO_BUS_NOME_EMP']    = $ERRO_BUS_NOME_EMP;
 			$dados['ERRO_BUS_CPFCNPJ_EMP'] = $ERRO_BUS_CPFCNPJ_EMP;

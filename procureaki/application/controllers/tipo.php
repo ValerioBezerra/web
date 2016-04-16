@@ -81,7 +81,7 @@ class Tipo extends CI_Controller {
 			}
 
 			if (is_numeric($bus_id_tip)) {
-				$this->session->set_flashdata('sucesso', 'tipbustível salvo tip sucesso.');
+				$this->session->set_flashdata('sucesso', 'tipo salvo com sucesso.');
 				redirect('tipo');
 			} else {
 				$this->session->set_flashdata('erro', $bus_id_tip);

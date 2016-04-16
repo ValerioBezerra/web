@@ -3,7 +3,7 @@
         <h2 class="page-header">Empresa - {ACAO}
         
 	        <div class="pull-right">
-		        <a type="button" href="{URL_SEGMENTOS}" class="btn btn-primary" {DISABLE_SEGMENTO}>
+		        <a type="button" href="{URL_TIPO}" class="btn btn-primary" {DISABLE_TIPO}>
 		        	<i class="glyphicon glyphicon-list-alt"></i> Segmentos
 		        </a>
 		    </div>  
@@ -56,7 +56,19 @@
 						<input type="text" class="form-control" id="bus_cpfcnpj_emp_j" data-mask="{MASCARA_CNPJ}"
 							   name="bus_cpfcnpj_emp" value="{bus_cpfcnpj_emp}" {DIV_BUS_CPFCNPJ_EMP_J} autocomplete="off"/>
 					</div>
-				</div>	
+				</div>
+
+				<div class="form-group {ERRO_BUS_BUSSEG_EMP}">
+					<label for="bus_busseg_emp" class="col-sm-1 control-label">Segmento</label>
+					<div class="col-sm-3">
+						<select class="form-control" id="bus_busseg_emp" name="bus_busseg_emp">
+							<option value="">Selecione</option>
+							{BLC_SEGMENTO}
+							<option value="{BUS_ID_SEG}" {SEL_BUS_ID_SEG}>{BUS_DESCRICAO_SEG}</option>
+							{/BLC_SEGMENTO}
+						</select>
+					</div>
+				</div>
 
 	    	</div>
 	    	

@@ -87,16 +87,6 @@
 
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('tipo')?>">Tipo</a>
-								</li>
-								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('cambio')?>">Câmbio</a>
-								</li>
-								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('marca')?>">Marca</a>
-								</li>
-								<li>
-									<a  style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('modelo')?>">Modelo</a>
-								</li>
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('empresa')?>">Empresas</a>
 								</li>
@@ -117,22 +107,15 @@
 									<a style="{dlv_althorario_per}" href="<?php echo site_url('horario')?>">Horários</a>
 								</li>
 
-								<li>
-									<a style="{dlv_alttaxa_per}" href="<?php echo site_url('taxas_valores')?>">Taxas e Valores</a>
-								</li>
+
 								<li>
 									<a style="{dlv_altfpg_per}" href="<?php echo site_url('empresa_forma_pagamento')?>">Formas de Pagamento</a>
 								</li>
 <!-- 								<li> 
 									<a style="{dlv_altrede_per}"  href="<?php echo site_url('empresa_rede_social')?>">Redes Sociais</a>
 								</li>                                 -->
-								<li>
-									<a style="{dlv_altarea_per}" href="<?php echo site_url('area_entrega')?>">Área de Entrega</a>
-								</li>  
-								<li>
-									<a style="{dlv_altarea_per}" href="<?php echo site_url('entregador')?>">Entregador</a>
-								</li>  
-								                                                          
+
+
 								<li>
 									<hr style="{DISPLAY_VALLESOFT_C}" />  
 								</li>  

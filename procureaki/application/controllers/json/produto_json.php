@@ -22,10 +22,7 @@ class Produto_Json extends CI_Controller {
 					"dlv_descricao_pro"         => $registro->dlv_descricao_pro,
 					"dlv_preco_pro"             => $registro->dlv_preco_pro,
 					"dlv_promocao_pro"     	    => $registro->dlv_promocao_pro,
-					"dlv_precopromocional_pro"  => $registro->dlv_precopromocional_pro,
-					"dlv_destaque_pro"          => $registro->dlv_destaque_pro,
-					"dlv_escolheproduto_pro"    => $registro->dlv_escolheproduto_pro,
-					"dlv_precomaiorproduto_pro" => $registro->dlv_precomaiorproduto_pro,	
+					
 					"usa_tamanho"               => (count($this->ProdutoModel->getQuantidadeTamanho($registro->dlv_id_pro)) > 0)?'1':'0'	
 				);
 			}
@@ -42,8 +39,8 @@ class Produto_Json extends CI_Controller {
 	
 			if ($resultado) {
 				$dados["dlv_detalhamento_pro"] = $resultado->dlv_detalhamento_pro;
-				$dados["dlv_tempopreparo_pro"] = $resultado->dlv_tempopreparo_pro;
-				$dados["dlv_umadicional_pro"]  = $resultado->dlv_umadicional_pro;
+				
+				
 				$dados["dlv_quantidade_pro"]   = $resultado->dlv_quantidade_pro;
 				$dados["dlv_unidade_pro"]      = $resultado->dlv_unidade_pro;
 				$dados["dlv_exibirfracao_pro"] = $resultado->dlv_exibirfracao_pro;
@@ -73,8 +70,7 @@ class Produto_Json extends CI_Controller {
 							"dlv_descricao_tam"         => $registro->dlv_descricao_tam,
 							"dlv_quantidade_tam"        => $registro->dlv_quantidade_tam,
 							"dlv_preco_pxt"             => $registro->dlv_preco_pxt,
-							"dlv_promocao_pxt"     	    => $registro->dlv_promocao_pxt,
-							"dlv_precopromocional_pxt"  => $registro->dlv_precopromocional_pxt
+							"dlv_promocao_pxt"     	    => $registro->dlv_promocao_pxt
 					);
 				}
 				
@@ -103,9 +99,8 @@ class Produto_Json extends CI_Controller {
 								"dlv_descricao_tam"         => $registroTamanho->dlv_descricao_tam,
 								"dlv_quantidade_tam"        => $registroTamanho->dlv_quantidade_tam,
 								"dlv_preco_pxt"             => $registroTamanho->dlv_preco_pxt,
-								"dlv_promocao_pxt"     	    => $registroTamanho->dlv_promocao_pxt,
-								"dlv_precopromocional_pxt"  => $registroTamanho->dlv_precopromocional_pxt
-						);
+								"dlv_promocao_pxt"     	    => $registroTamanho->dlv_promocao_pxt
+														);
 					}
 				
 					$dados["produtos"][] = array(
@@ -114,10 +109,7 @@ class Produto_Json extends CI_Controller {
 							"dlv_detalhamento_pro"      => $registro->dlv_detalhamento_pro,
 							"dlv_preco_pro"             => $registro->dlv_preco_pro,
 							"dlv_promocao_pro"     	    => $registro->dlv_promocao_pro,
-							"dlv_precopromocional_pro"  => $registro->dlv_precopromocional_pro,
-							"dlv_destaque_pro"          => $registro->dlv_destaque_pro,
-							"dlv_escolheproduto_pro"    => $registro->dlv_escolheproduto_pro,
-							"dlv_precomaiorproduto_pro" => $registro->dlv_precomaiorproduto_pro,
+						
 							"usa_tamanho"               => (count($this->ProdutoModel->getQuantidadeTamanho($registro->dlv_id_pro)) > 0)?'1':'0',
 							"url_imagem"	            => $urlImagem,
 							"tamanhos"                  => $tamanhos

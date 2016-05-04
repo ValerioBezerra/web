@@ -90,9 +90,7 @@
 								<li>
 									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('empresa')?>">Empresas</a>
 								</li>
-								<li>
-									<a style="{DISPLAY_VALLESOFT}" href="<?php echo site_url('notificacao')?>">Notificações</a>
-								</li>
+								
 								
 								<li>
 									<a style="{dlv_cadperfil_per}" href="<?php echo site_url('perfil')?>">Perfil</a>
@@ -103,14 +101,9 @@
 								<li>
 									<a style="{dlv_alttelefone_per}" href="<?php echo site_url('telefone')?>">Fones</a>
 								</li>
-								<li>
-									<a style="{dlv_althorario_per}" href="<?php echo site_url('horario')?>">Horários</a>
-								</li>
 
 
-								<li>
-									<a style="{dlv_altfpg_per}" href="<?php echo site_url('empresa_forma_pagamento')?>">Formas de Pagamento</a>
-								</li>
+
 <!-- 								<li> 
 									<a style="{dlv_altrede_per}"  href="<?php echo site_url('empresa_rede_social')?>">Redes Sociais</a>
 								</li>                                 -->
@@ -120,12 +113,8 @@
 									<hr style="{DISPLAY_VALLESOFT_C}" />  
 								</li>  
 								                             
-								<li>
-									<a style="{dlv_cadtamanho_per}" href="<?php echo site_url('tamanho')?>">Tamanhos</a>
-								</li>
-								<li>
-									<a style="{dlv_cadadicional_per}" href="<?php echo site_url('adicional')?>">Adicionais</a>
-								</li>                                
+
+
 								<li>
 									<a style="{dlv_cadcategoria_per}" href="<?php echo site_url('categoria')?>">Categorias</a>
 								</li>

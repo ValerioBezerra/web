@@ -86,10 +86,13 @@ class Endereco_Json extends CI_Controller {
 								"glo_id_end"         => $resultado->glo_id_end,
 								"glo_cep_end"        => $resultado->glo_cep_end,
 								"glo_logradouro_end" => $resultado->glo_logradouro_end,
+								"glo_latitude_end"   => $resultado->glo_latitude_end,
+								"glo_latitude_end"   => $resultado->glo_latitude_end,
 								"glo_id_bai"         => $resultado->glo_id_bai,
 								"glo_nome_bai"       => $resultado->glo_nome_bai,
 								"glo_id_cid"         => $resultado->glo_id_cid,
 								"glo_nome_cid"       => $resultado->glo_nome_cid,
+								"glo_uf_est"         => $resultado->glo_uf_est,
 								"glo_uf_est"         => $resultado->glo_uf_est
 							);
 						}
@@ -150,6 +153,8 @@ class Endereco_Json extends CI_Controller {
 					"glo_id_end"         => $registro->glo_id_end,
 					"glo_cep_end"        => $registro->glo_cep_end,
 					"glo_logradouro_end" => $registro->glo_logradouro_end,
+					"glo_latitude_end"   => $registro->glo_latitude_end,
+					"glo_longitude_end"  => $registro->glo_longitude_end,
 					"glo_id_bai"         => $registro->glo_id_bai,
 					"glo_nome_bai"       => $registro->glo_nome_bai,
 					"glo_id_cid"         => $registro->glo_id_cid,
@@ -173,6 +178,8 @@ class Endereco_Json extends CI_Controller {
 				$dados['glo_id_end']         = $resultado->glo_id_end;
 				$dados['glo_cep_end']        = $resultado->glo_cep_end;
 				$dados['glo_logradouro_end'] = $resultado->glo_logradouro_end;
+				$dados['glo_latitude_end']   = $resultado->glo_latitude_end;
+				$dados['glo_longitude_end']  = $resultado->glo_longitude_end;
 				$dados['glo_id_bai']         = $resultado->glo_id_bai;
 				$dados['glo_nome_bai']       = $resultado->glo_nome_bai;
 				$dados['glo_id_cid']         = $resultado->glo_id_cid;

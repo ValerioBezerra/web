@@ -7,98 +7,58 @@ class Empresa_Json extends CI_Controller {
 		
 		$this->load->model('Empresa_Model', 'EmpresaModel');
 		$this->load->model('Endereco_Model', 'EnderecoModel');
-		$this->load->model('Empresa_Segmento_Model', 'EmpresaSegmentoModel');
-		$this->load->model('Telefone_Model', 'TelefoneModel');
-		$this->load->model('Taxa_Bairro_Model', 'TaxaBairroModel');
 	}
 	
-	public function retornar_empresas_endereco($chave, $cep_cliente, $dlv_glocid_aen, $dlv_globai_ane, $segmentos, $dlv_nome_emp = NULL) {
+		public function retornar_empresas($chave, $bus_busseg_emp, $bus_bustip_ext, $latitude, $longitude, $distanciaKm) {
 		$dados = array();
 		
 		if ($chave == CHAVE_MD5) {
-			$where_segmentos = "";
-			if ($segmentos != "+") {
-				$array_segmentos = explode("+", $segmentos);
-				$where_segmentos = "(";
-				$separador       = "";
-				foreach ($array_segmentos as $registro) {
-					$where_segmentos = $where_segmentos.$separador."dlv_dlvseg_exs = ".$registro;
-					$separador       = " OR ";
-				}
-				$where_segmentos = $where_segmentos.")";
-			}
-				
-			$resultado = $this->EmpresaModel->getEmpresaEndereco($dlv_nome_emp, $dlv_glocid_aen, $dlv_globai_ane, $where_segmentos);
-	
+			$resultado = $this->db->query(" SELECT bus_emp.*, glo_end.*, glo_bai.*, glo_cid.*, glo_est.*, ".
+										  "        (acos(sin(radians(".$latitude.")) * sin(radians(glo_latitude_end)) + ".
+				                          "         cos(radians(".$latitude.")) * cos(radians(glo_latitude_end)) * ".
+				                          "         cos(radians(".$longitude.") - radians(glo_longitude_end))) * 6378) AS distancia_km  ".
+										  " FROM bus_emp ".
+				                          " LEFT JOIN bus_ext ON bus_busemp_ext = bus_id_emp ".
+										  " LEFT JOIN glo_end ON glo_id_end = bus_gloend_emp ".
+						   				  " LEFT JOIN glo_bai ON glo_id_bai = glo_globai_end ".
+				                          " LEFT JOIN glo_cid ON glo_id_cid = glo_glocid_bai ".
+				                          " LEFT JOIN glo_est ON glo_id_est = glo_gloest_cid ".
+										  " WHERE bus_id_emp <> 1 ".
+				                          "   AND bus_busseg_emp = ".$bus_busseg_emp.
+				                          "   AND bus_bustip_ext = ".$bus_bustip_ext.
+										  "   AND (acos(sin(radians(".$latitude.")) * sin(radians(glo_latitude_end)) + ".
+										  "         cos(radians(".$latitude.")) * cos(radians(glo_latitude_end)) * ".
+										  "         cos(radians(".$longitude.") - radians(glo_longitude_end))) * 6378) <=  ".$distanciaKm.
+			                              " ORDER BY (acos(sin(radians(".$latitude.")) * sin(radians(glo_latitude_end)) + ".
+				                          "           cos(radians(".$latitude.")) * cos(radians(glo_latitude_end)) * ".
+				                          "           cos(radians(".$longitude.") - radians(glo_longitude_end))) * 6378)")->result();
+
 			foreach ($resultado as $registro) {
-				$tempoDistancia  = $this->EnderecoModel->getDistanciaTempoEnderecos($registro->glo_cep_end, $cep_cliente);
-
-                $fones = array();
-                $resultado_fones = $this->TelefoneModel->getTelefonesEmpresa($registro->dlv_id_emp);
-                foreach ($resultado_fones as $registro_fone) {
-                    $fones[] = array(
-                        "dlv_fone_ext" => $registro_fone->dlv_fone_ext
-                    );
-                }
-
-				$taxa_entrega   = $registro->dlv_taxaentrega_emp;
-				$resultado_taxa = $this->TaxaBairroModel->getEmpresaTaxaBairro($dlv_globai_ane, $registro->dlv_id_emp);
-				if (!empty($resultado_taxa)) {
-					$taxa_entrega = $resultado_taxa->dlv_taxaentrega_txb;
-				}
-				
-				$hora        = date("H", strtotime($registro->dlv_tempomedio_emp));
-				$minuto      = date("i", strtotime($registro->dlv_tempomedio_emp));
-				$tempo_medio = "";
-					
-				if ($hora != 0) {
-					$tempo_medio = $tempo_medio.$hora.'h';
-				}
-					
-				if ($minuto != 0) {
-					$tempo_medio = $tempo_medio.$minuto.'min.';
-				}				
-
 				$dados[] = array(
-					"dlv_id_emp"           => $registro->dlv_id_emp,
-					"dlv_nome_emp"         => $registro->dlv_nome_emp,
-					"dlv_detalhamento_emp" => $registro->dlv_detalhamento_emp,
-					"dlv_taxaentrega_emp"  => $taxa_entrega,
-					"dlv_valorminimo_emp"  => $registro->dlv_valorminimo_emp,
-					"dlv_tempomedio_emp"   => $tempo_medio,
-					"fones"                => $fones,
-					"dlv_aberto_emp"       => $registro->dlv_aberto_emp,
-					"glo_id_end"           => $registro->glo_id_end,
-					"glo_cep_end"          => $registro->glo_cep_end,
-					"glo_logradouro_end"   => $registro->glo_logradouro_end,
-					"glo_id_bai"           => $registro->glo_id_bai,
-					"glo_nome_bai"         => $registro->glo_nome_bai,
-					"glo_id_cid"           => $registro->glo_id_cid,
-					"glo_nome_cid"         => $registro->glo_nome_cid,
-					"glo_uf_est"           => $registro->glo_uf_est,
-					"dlv_numero_emp"	   => $registro->dlv_numero_emp,
-					"dlv_complemento_emp"  => $registro->dlv_complemento_emp,
-					"distancia_enderecos"  => $tempoDistancia["distancia"],							
-					"tempo_enderecos"      => $tempoDistancia["tempo"],	
-					"segmentos"            => array("lista" => $this->EmpresaSegmentoModel->get($registro->dlv_id_emp)),
-					"quantidade_curtidas"  => count($this->EmpresaModel->getQuantidadeCurtidas($registro->dlv_id_emp)),
-					"url_imagem"           => base_url('assets/images/empresas/'.$registro->dlv_id_emp.".png")
+					"bus_id_emp"                   => $registro->bus_id_emp,
+					"bus_nome_emp"                 => $registro->bus_nome_emp,
+					"bus_aberto_emp"               => $registro->bus_aberto_emp,
+					"bus_detalhamento_emp"         => $registro->bus_detalhamento_emp,
+					"glo_id_end"                   => $registro->glo_id_end,
+					"glo_cep_end"                  => $registro->glo_cep_end,
+					"glo_logradouro_end"           => $registro->glo_logradouro_end,
+					"glo_latitude_end"             => $registro->glo_latitude_end,
+					"glo_longitude_end"            => $registro->glo_longitude_end,
+					"glo_id_bai"                   => $registro->glo_id_bai,
+					"glo_nome_bai"                 => $registro->glo_nome_bai,
+					"glo_id_cid"                   => $registro->glo_id_cid,
+					"glo_nome_cid"                 => $registro->glo_nome_cid,
+					"glo_uf_est"                   => $registro->glo_uf_est,
+					"bus_numero_emp"	           => $registro->bus_numero_emp,
+					"bus_complemento_emp"          => $registro->bus_complemento_emp,
+					"quantidade_dias_atualizacao"  => 10,
+					"distancia_km"                 => $registro->distancia_km,
+					"url_imagem"                   => ""
 				);
 			}
 		}
 	
 		echo json_encode(array("empresas" => $dados));
 	}
-
-    public function verificar_empresas($chave) {
-        $dados['resposta'] = false;
-
-        if ($chave == CHAVE_MD5) {
-            $this->db->query("CALL sp_dlv_emp_verificar()")->result();
-            $dados['resposta'] = true;
-        }
-
-        echo json_encode($dados);
-    }
 
 }

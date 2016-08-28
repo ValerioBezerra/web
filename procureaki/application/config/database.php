@@ -50,16 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-<<<<<<< HEAD
 $db['default']['password'] = '123';
 $db['default']['database'] = 'prokureaki';
-=======
-$db['default']['password'] = '';
-$db['default']['database'] = 'procureaki';
->>>>>>> 9186acaa45835b23b5f1b1432ef3357be2eaa4eb
-// $db['default']['username'] = 'encon816_king';
-// $db['default']['password'] = '';
-// $db['default']['database'] = 'encon816_encontredelivery';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

@@ -9,7 +9,27 @@ class Produto_Json extends CI_Controller {
 		$this->load->model('Produto_Produto_Model', 'ProdutoProdutoModel');
 		$this->load->model('Produto_Tamanho_Model', 'ProdutoTamanhoModel');
 	}
-	
+
+	public function retornar_produtos_descricao($chave, $bus_descricao_pro) {
+		$dados = array();
+
+		if ($chave == CHAVE_MD5) {
+			$resultado = $this->ProdutoModel->getProdutoDescricaoOrdemPrecoMenor($bus_descricao_pro);
+
+			foreach ($resultado as $registro) {
+				$dados[] = array(
+					"bus_id_pro"        => $registro->bus_id_pro,
+					"bus_descricao_pro" => $registro->bus_descricao_pro,
+					"bus_preco_pro"     => $registro->bus_preco_pro,
+					"urlImagemEmpresa"  => base_url('assets/images/empresas/'.$registro->bus_busemp_pro.".png")
+
+				);
+			}
+		}
+
+		echo json_encode(array("produtos" => $dados));
+	}
+
 	public function retornar_produtos_categoria($chave, $dlv_dlvcat_pro) {
 		$dados = array();
 	
@@ -22,8 +42,7 @@ class Produto_Json extends CI_Controller {
 					"dlv_descricao_pro"         => $registro->dlv_descricao_pro,
 					"dlv_preco_pro"             => $registro->dlv_preco_pro,
 					"dlv_promocao_pro"     	    => $registro->dlv_promocao_pro,
-					
-					"usa_tamanho"               => (count($this->ProdutoModel->getQuantidadeTamanho($registro->dlv_id_pro)) > 0)?'1':'0'	
+					"usa_tamanho"               => (count($this->ProdutoModel->getQuantidadeTamanho($registro->dlv_id_pro)) > 0)?'1':'0'
 				);
 			}
 		}

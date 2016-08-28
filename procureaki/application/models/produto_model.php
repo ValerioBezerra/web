@@ -49,7 +49,16 @@ class Produto_Model extends CI_Model {
 		$this->db->order_by('bus_promocao_pro DESC, bus_ordem_pro, bus_descricao_pro');
 		return $this->db->get()->result();
 	}
-	
+
+	public function getProdutoDescricaoOrdemPrecoMenor($bus_descricao_pro) {
+		$this->db->from('bus_pro');
+		$this->db->like('bus_descricao_pro', $bus_descricao_pro);
+		$this->db->where('bus_ativo_pro', 1, FALSE);
+
+		$this->db->order_by('bus_preco_pro, bus_descricao_pro');
+		return $this->db->get()->result();
+	}
+
 	public function getQuantidadeTamanho($bus_id_pro) {
 		$this->db->select('bus_bustam_pxt');
 		$this->db->from('bus_pxt');

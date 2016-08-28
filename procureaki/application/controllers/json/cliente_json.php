@@ -13,8 +13,8 @@ class Cliente_JSON extends CI_Controller {
 		$cliente = json_decode($json,true);
 		
 		$verificarEmail = FALSE;		
-		if (empty($cliente['dlv_idfacebook_cli'])) {
-			$verificarEmail = $this->ClienteModel->verificarEmail($cliente['dlv_email_cli']);				
+		if (empty($cliente['bus_idfacebook_cli'])) {
+			$verificarEmail = $this->ClienteModel->verificarEmail($cliente['bus_email_cli']);				
 		}
 		
 		$msgErros = "";
@@ -31,11 +31,10 @@ class Cliente_JSON extends CI_Controller {
 		}
 		
 		if (!$erros) {
-            $cliente['dlv_ativo_cli'] = 1;
-            $dlv_id_cli = $this->ClienteModel->insert($cliente);
+            $bus_id_cli = $this->ClienteModel->insert($cliente);
 			
-			if (is_numeric($dlv_id_cli)) {
-				echo "s".$dlv_id_cli;
+			if (is_numeric($bus_id_cli)) {
+				echo "s".$bus_id_cli;
 			} else {
 				echo "n";
 			}
@@ -44,7 +43,7 @@ class Cliente_JSON extends CI_Controller {
 		}
 	}
 	
-	public function alterar($chave, $dlv_id_cli) {
+	public function alterar($chave, $bus_id_cli) {
 		$json    = $this->input->post('json');
 		$cliente = json_decode($json,true);
 	
@@ -57,9 +56,9 @@ class Cliente_JSON extends CI_Controller {
 		} 
 	
 		if (!$erros) {
-			$dlv_id_cli = $this->ClienteModel->update($cliente, $dlv_id_cli);
+			$bus_id_cli = $this->ClienteModel->update($cliente, $bus_id_cli);
 				
-			if (is_numeric($dlv_id_cli)) {
+			if (is_numeric($bus_id_cli)) {
 				echo "s";
 			} else {
 				echo "n";
@@ -69,13 +68,13 @@ class Cliente_JSON extends CI_Controller {
 		}
 	}	
 	
-	public function retornar_login_email($chave, $dlv_email_cli, $dlv_senha_cli) {
+	public function retornar_login_email($chave, $bus_email_cli, $bus_senha_cli) {
 		$dados = array();
 		
-		$dlv_email_cli = str_ireplace("%20", " ", $dlv_email_cli);
+		$bus_email_cli = str_ireplace("%20", " ", $bus_email_cli);
 		
 		if ($chave == CHAVE_MD5) {
-			$resultado = $this->ClienteModel->getClienteLoginEmail($dlv_email_cli, $dlv_senha_cli);
+			$resultado = $this->ClienteModel->getClienteLoginEmail($bus_email_cli, $bus_senha_cli);
 			
 			if ($resultado) {
 				foreach ($resultado as $chave => $valor) {
@@ -87,11 +86,11 @@ class Cliente_JSON extends CI_Controller {
 		echo json_encode($dados);		
 	}	
 	
-	public function verificar_facebook($chave, $dlv_idfacebook_cli) {
+	public function verificar_facebook($chave, $bus_idfacebook_cli) {
 		$dados = array();
 		
 		if ($chave == CHAVE_MD5) {
-			$resultado = $this->ClienteModel->verificarFacebook($dlv_idfacebook_cli);
+			$resultado = $this->ClienteModel->verificarFacebook($bus_idfacebook_cli);
 							
 			if ($resultado) {
 				foreach ($resultado as $chave => $valor) {
@@ -104,10 +103,10 @@ class Cliente_JSON extends CI_Controller {
 		echo json_encode($dados);
 	}
 	
-	public function recuperar_senha($chave, $dlv_email_cli) {
+	public function recuperar_senha($chave, $bus_email_cli) {
 		$dados = array();
 		$this->load->library('email');
-		$verificarEmail = $this->ClienteModel->verificarEmail($dlv_email_cli);
+		$verificarEmail = $this->ClienteModel->verificarEmail($bus_email_cli);
 		
 		$msgErros = "";
 		$erros    = FALSE;
@@ -124,11 +123,11 @@ class Cliente_JSON extends CI_Controller {
 		
 		if (!$erros) {
 			$nova_senha = $this->gerarSenha(6, 5);
-			$subject    = "Recuperação de senha - Encontre Delivery";
+			$subject    = "Recuperação de senha - Procure Aki";
 			$from       = "contato@encontredelivery.com.br";
-			$from_nick  = "Encontre Delivery";		
-			$to         = $dlv_email_cli;
-			$body       = "Olá, ".$verificarEmail->dlv_nome_cli.".<br>".
+			$from_nick  = "Procure Aki";
+			$to         = $bus_email_cli;
+			$body       = "Olá, ".$verificarEmail->bus_nome_cli.".<br>".
 					      "Alteramos sua senha, logue com ela e em seguida altere na tela de 'configurações'.<br>".
 					      "Sua nova senha é: <strong>".$nova_senha."</strong>";
 			
@@ -140,11 +139,11 @@ class Cliente_JSON extends CI_Controller {
 			
 			$this->email->send(); // Envia o email
 			
-			$cliente['dlv_senha_cli'] = md5($nova_senha);
+			$cliente['bus_senha_cli'] = md5($nova_senha);
 			
-			$dlv_id_cli = $this->ClienteModel->update($cliente, $verificarEmail->dlv_id_cli);
+			$bus_id_cli = $this->ClienteModel->update($cliente, $verificarEmail->bus_id_cli);
 			
-			if (is_numeric($dlv_id_cli)) {
+			if (is_numeric($bus_id_cli)) {
 				$dados['status'] = 'sucesso';
 			} else {
 				$dados['status']   = 'erro';

@@ -9,7 +9,7 @@ class Empresa_Json extends CI_Controller {
 		$this->load->model('Endereco_Model', 'EnderecoModel');
 	}
 	
-		public function retornar_empresas($chave, $bus_busseg_emp, $bus_bustip_ext, $latitude, $longitude, $distanciaKm) {
+		public function retornar_empresas($chave, $bus_busseg_emp, $latitude, $longitude, $distanciaKm) {
 		$dados = array();
 		
 		if ($chave == CHAVE_MD5) {
@@ -18,14 +18,12 @@ class Empresa_Json extends CI_Controller {
 				                          "         cos(radians(".$latitude.")) * cos(radians(glo_latitude_end)) * ".
 				                          "         cos(radians(".$longitude.") - radians(glo_longitude_end))) * 6378) AS distancia_km  ".
 										  " FROM bus_emp ".
-				                          " LEFT JOIN bus_ext ON bus_busemp_ext = bus_id_emp ".
 										  " LEFT JOIN glo_end ON glo_id_end = bus_gloend_emp ".
 						   				  " LEFT JOIN glo_bai ON glo_id_bai = glo_globai_end ".
 				                          " LEFT JOIN glo_cid ON glo_id_cid = glo_glocid_bai ".
 				                          " LEFT JOIN glo_est ON glo_id_est = glo_gloest_cid ".
 										  " WHERE bus_id_emp <> 1 ".
 				                          "   AND bus_busseg_emp = ".$bus_busseg_emp.
-				                          "   AND bus_bustip_ext = ".$bus_bustip_ext.
 										  "   AND (acos(sin(radians(".$latitude.")) * sin(radians(glo_latitude_end)) + ".
 										  "         cos(radians(".$latitude.")) * cos(radians(glo_latitude_end)) * ".
 										  "         cos(radians(".$longitude.") - radians(glo_longitude_end))) * 6378) <=  ".$distanciaKm.
@@ -53,7 +51,7 @@ class Empresa_Json extends CI_Controller {
 					"bus_complemento_emp"          => $registro->bus_complemento_emp,
 					"quantidade_dias_atualizacao"  => 10,
 					"distancia_km"                 => $registro->distancia_km,
-					"url_imagem"                   => ""
+					"url_imagem"                   => base_url('assets/images/empresas/'.$registro->bus_id_emp.".png")
 				);
 			}
 		}
